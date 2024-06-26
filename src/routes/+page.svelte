@@ -3,7 +3,6 @@
 
 /*
 TODO:
-* detailed text
 * try hosting on panix
 * test on TV-- legacy?
 
@@ -44,6 +43,7 @@ function newCategory() {
       name: '',
       going: false,
       intervals: [],
+      detailText: '',
    }
    return newCat;
 }
