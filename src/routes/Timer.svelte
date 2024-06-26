@@ -9,6 +9,7 @@
 <script>
     import { onMount, tick } from 'svelte';
     import { currentEditID } from "./stores.js";
+import TimeWidget from "./TimeWidget.svelte";
 
   export let category;
   export let stop_time;
@@ -66,9 +67,16 @@ async function endEditing() {
     $currentEditID = -1;
   }
 
+let lastIntervalSeconds;
 
 function update() {
      seconds = totalTime(category.intervals);
+     let lastIndex = category.intervals.length - 1;
+     if (lastIndex >= 0) {
+        if (category.intervals[lastIndex].length < 2) {
+          lastIntervalSeconds = totalTime([category.intervals[lastIndex]]);
+        }
+     }
   }
 
 function totalTime(intervals) {
@@ -122,6 +130,11 @@ function toggle() {
   saveAll();
 }
 
+function deleteInterval(index) {
+   category.intervals.splice(index, 1);
+   saveAll();
+}
+
 function deleteMe() {
   deleteItem(category);
 }
@@ -150,11 +163,17 @@ function deleteMe() {
 
 <details>
   <summary>Details and Editing...</summary>
-    {#each category.intervals as interval}
+    {#each category.intervals as interval, i (interval)}
        <p>
+         <button on:click={() => deleteInterval(i)}>-</button>
          {#each interval as end}
-           {new Date(end).toString()}
+           <TimeWidget bind:millis={end} />
          {/each}
+         {#if interval.length == 2}
+           {formatTime(totalTime([interval]))}
+         {:else}
+            {formatTime(lastIntervalSeconds)}
+         {/if}
        </p>
     {/each}
     <button on:click={startEditing}>
@@ -196,9 +215,5 @@ function deleteMe() {
   }
   button:active {
     border: 0.5rem inset;
-  }
-  button.plain {
-    border: none;
-    background-color: inherit;
   }
 </style>

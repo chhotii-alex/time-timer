@@ -3,9 +3,6 @@
 
 /*
 TODO:
-* view intervals
-* delete an interval
-* edit dates and times in intervals
 * detailed text
 * try hosting on panix
 * test on TV-- legacy?
@@ -13,6 +10,7 @@ TODO:
 */
 
 import Timer from "./Timer.svelte";
+import TimeWidget from "./TimeWidget.svelte";
 
 const isBrowser = typeof window !== "undefined";
 
@@ -43,7 +41,7 @@ function nextHigherId() {
 function newCategory() {
    let newCat = {
       id: nextHigherId(),
-      name: 'foo',
+      name: '',
       going: false,
       intervals: [],
    }
