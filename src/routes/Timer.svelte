@@ -179,7 +179,7 @@ function deleteMe() {
     <button on:click={startEditing}>
       Edit Title
     </button>
-    <textarea bind:value={category.detailText} on:input={saveAll}></textarea>
+    <textarea bind:value={category.detailText} on:input={saveAll} cols="25" rows="5" ></textarea>
     <details bind:open={isOpen} >
      <summary>Delete...</summary>
      Delete timer?
