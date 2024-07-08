@@ -132,6 +132,7 @@ function toggle() {
 
 function deleteInterval(index) {
    category.intervals.splice(index, 1);
+   category.intervals = category.intervals;
    saveAll();
 }
 
